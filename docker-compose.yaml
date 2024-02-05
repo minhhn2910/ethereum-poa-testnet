@@ -1,0 +1,65 @@
+services:
+  node1:
+    command:
+    - cp -r /root/data /root/data2 ; geth account import --datadir /root/data2 --password
+      /root/files/password /root/files/priv.key ; geth --datadir /root/data2 init
+      /root/files/genesis.json ; geth --datadir /root/data2 --nodiscover --syncmode
+      full --nodekey /root/files/priv.key --port 30313 --http --http.addr "0.0.0.0"
+      --http.vhosts="*" --http.corsdomain="*" --http.port 8503 --http.api db,eth,net,web3,admin,personal,miner,signer:insecure_unlock_protect
+      --networkid 1234 --unlock 0 --password /root/files/password --mine --allow-insecure-unlock
+      --ws --ws.port 33445 --ws.addr "0.0.0.0" --ws.origins="*" --ws.api eth,net,web3
+    entrypoint: /bin/sh -c
+    hostname: node_1
+    image: ethereum/client-go:release-1.10
+    ports:
+    - 30313:30313
+    - 8503:8503
+    - 33445:33445
+    volumes:
+    - ${DATA_PATH_PREFIX}/seed_data/node_1/keys/password:/root/files/password:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_1/keys/priv.key:/root/files/priv.key:ro
+    - ${DATA_PATH_PREFIX}/seed_data/genesis.json:/root/files/genesis.json:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_1/data:/root/data:ro
+  node2:
+    command:
+    - cp -r /root/data /root/data2 ; geth account import --datadir /root/data2 --password
+      /root/files/password /root/files/priv.key ; geth --datadir /root/data2 init
+      /root/files/genesis.json ; geth --datadir /root/data2 --nodiscover --syncmode
+      full --nodekey /root/files/priv.key --port 30314 --http --http.addr "0.0.0.0"
+      --http.vhosts="*" --http.corsdomain="*" --http.port 8504 --http.api db,eth,net,web3,admin,personal,miner,signer:insecure_unlock_protect
+      --networkid 1234 --unlock 0 --password /root/files/password --mine --allow-insecure-unlock
+      --ws --ws.port 33446 --ws.addr "0.0.0.0" --ws.origins="*" --ws.api eth,net,web3
+    entrypoint: /bin/sh -c
+    hostname: node_2
+    image: ethereum/client-go:release-1.10
+    ports:
+    - 30314:30314
+    - 8504:8504
+    - 33446:33446
+    volumes:
+    - ${DATA_PATH_PREFIX}/seed_data/node_2/keys/password:/root/files/password:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_2/keys/priv.key:/root/files/priv.key:ro
+    - ${DATA_PATH_PREFIX}/seed_data/genesis.json:/root/files/genesis.json:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_2/data:/root/data:ro
+  node3:
+    command:
+    - cp -r /root/data /root/data2 ; geth account import --datadir /root/data2 --password
+      /root/files/password /root/files/priv.key ; geth --datadir /root/data2 init
+      /root/files/genesis.json ; geth --datadir /root/data2 --nodiscover --syncmode
+      full --nodekey /root/files/priv.key --port 30315 --http --http.addr "0.0.0.0"
+      --http.vhosts="*" --http.corsdomain="*" --http.port 8505 --http.api db,eth,net,web3,admin,personal,miner,signer:insecure_unlock_protect
+      --networkid 1234 --unlock 0 --password /root/files/password --mine --allow-insecure-unlock
+      --ws --ws.port 33447 --ws.addr "0.0.0.0" --ws.origins="*" --ws.api eth,net,web3
+    entrypoint: /bin/sh -c
+    hostname: node_3
+    image: ethereum/client-go:release-1.10
+    ports:
+    - 30315:30315
+    - 8505:8505
+    - 33447:33447
+    volumes:
+    - ${DATA_PATH_PREFIX}/seed_data/node_3/keys/password:/root/files/password:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_3/keys/priv.key:/root/files/priv.key:ro
+    - ${DATA_PATH_PREFIX}/seed_data/genesis.json:/root/files/genesis.json:ro
+    - ${DATA_PATH_PREFIX}/seed_data/node_3/data:/root/data:ro
+version: '3'
